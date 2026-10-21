@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -14,11 +15,11 @@ public class FieldCentricMecanumTeleOp extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         // Declare our motors
         // Make sure your ID's match your configuration
-        DcMotor frontLeftMotor = hardwareMap.dcMotor.get("frontLeftMotor");
-        DcMotor backLeftMotor = hardwareMap.dcMotor.get("backLeftMotor");
-        DcMotor frontRightMotor = hardwareMap.dcMotor.get("frontRightMotor");
-        DcMotor backRightMotor = hardwareMap.dcMotor.get("backRightMotor");
-        DcMotor intake = hardwareMap.dcMotor.get("intake");
+        DcMotorEx frontLeftMotor = hardwareMap.get(DcMotorEx.class,"frontLeftMotor");
+        DcMotorEx backLeftMotor = hardwareMap.get(DcMotorEx.class,"backLeftMotor");
+        DcMotorEx frontRightMotor = hardwareMap.get(DcMotorEx.class,"frontRightMotor");
+        DcMotorEx backRightMotor = hardwareMap.get(DcMotorEx.class,"backRightMotor");
+        DcMotorEx intake = hardwareMap.get(DcMotorEx.class,"intake");
 
         // Reverse the right side motors. This may be wrong for your setup.
         // If your robot moves backwards when commanded to go forwards,
@@ -69,15 +70,15 @@ public class FieldCentricMecanumTeleOp extends LinearOpMode {
             double frontRightPower = (rotY - rotX - rx) / denominator;
             double backRightPower = (rotY + rotX - rx) / denominator;
 
-            frontLeftMotor.setPower(frontLeftPower);
-            backLeftMotor.setPower(backLeftPower);
-            frontRightMotor.setPower(frontRightPower);
-            backRightMotor.setPower(backRightPower);
+            frontLeftMotor.setVelocity(frontLeftPower);
+            backLeftMotor.setVelocity(backLeftPower);
+            frontRightMotor.setVelocity(frontRightPower);
+            backRightMotor.setVelocity(backRightPower);
 
             if(gamepad1.left_bumper) {
-                intake.setPower(1);
+                intake.setVelocity(1);
             } else {
-                intake.setPower(0);
+                intake.setVelocity(0);
             }
         }
     }
